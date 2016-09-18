@@ -1,0 +1,7 @@
+include 'specs'
+include 'adapter-bansa'
+include 'adapter-kedux'
+include 'adapter-reduks'
+include 'adapter-redux-java'
+include 'adapter-redux-kotlin'
+

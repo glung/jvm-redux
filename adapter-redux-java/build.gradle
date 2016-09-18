@@ -1,0 +1,33 @@
+group 'redux'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.0.3'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+sourceCompatibility = 1.5
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven { url "http://repository.jetbrains.com/all" }
+}
+
+dependencies {
+    compile project(':specs')
+    compile 'com.glung.redux-java:redux-java:0.1-test7'
+
+    testCompile 'org.jetbrains.spek:spek:1.0.9'
+    testCompile 'org.mockito:mockito-core:2.0.86-beta'
+    testCompile project(path: ':specs', configuration: 'testOutput')
+}
