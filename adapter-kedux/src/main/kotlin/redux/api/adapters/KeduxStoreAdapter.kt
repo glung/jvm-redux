@@ -37,7 +37,7 @@ class KeduxStoreAdapter<S : Any>(val impl: com.angusmorton.kedux.Store<S, Any>) 
             val libReducer = { s: S, a: Any -> reducer.reduce(s, a) }
             val libStore = com.angusmorton.kedux.Store.create(libState, libReducer)
             val store = KeduxStoreAdapter(libStore)
-            // The lib does not do it
+            // TODO : Remove when fixed in lib
             store.dispatch(Store.Companion.INIT)
             return store
         }

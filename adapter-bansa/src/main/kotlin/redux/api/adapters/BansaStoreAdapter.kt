@@ -38,7 +38,7 @@ class BansaStoreAdapter<S : Any>(val store: com.brianegan.bansa.Store<S>) : Stor
         private fun <T : Any> bansaStoreAdapter(initialState: T, reducer: Reducer<T>): BansaStoreAdapter<T> {
             val libsStore = BaseStore<T>(initialState, toLibReducer(reducer))
             val store = BansaStoreAdapter(libsStore)
-            // The lib does not do it
+            // TODO : Remove when fixed in lib
             store.dispatch(Store.Companion.INIT)
             return store
         }

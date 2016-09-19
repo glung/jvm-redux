@@ -1,5 +1,6 @@
 // We have to cheat on the package visibility because of some interoperability issue
 // The internal CoreStore is required to be accessible.
+// TODO : Remove when fixed in lib
 package com.redux
 
 import redux.api.Reducer
@@ -43,7 +44,7 @@ class ReduxJavaStoreAdapter<S : Any>(val impl: com.redux.Store<LibAction, LibSta
             val libReducer: com.redux.Reducer<LibAction, LibState<S>> = toLibReducer(reducer)
             val libStore: com.redux.Store<LibAction, LibState<S>> = com.redux.Store.create(libState, libReducer)
             val store = ReduxJavaStoreAdapter(libStore)
-            // The lib does not do it
+            // TODO : Remove when fixed in lib
             store.dispatch(Store.Companion.INIT)
             return store
         }

@@ -5,7 +5,9 @@ import redux.api.Store
 
 class ReduxKotlinStoreAdapter<S : Any>(val impl: redux.Store<S>) : Store<S> {
 
-    override fun dispatch(action: Any): Any = impl.dispatch(action)
+    override fun dispatch(action: Any): Any {
+        return impl.dispatch(action)
+    }
 
     override fun getState(): S = impl.getState()
 
@@ -16,6 +18,8 @@ class ReduxKotlinStoreAdapter<S : Any>(val impl: redux.Store<S>) : Store<S> {
 
     override fun replaceReducer(reducer: Reducer<S>) {
         impl.replaceReducer(toLibReducer(reducer))
+        // TODO : Remove when fixed in lib
+        impl.dispatch(redux.Store.Companion.INIT)
     }
 
     companion object {
@@ -120,7 +124,14 @@ class ReduxKotlinStoreAdapter<S : Any>(val impl: redux.Store<S>) : Store<S> {
 
         private fun <S : Any> toLibReducer(reducer: Reducer<S>): redux.Reducer<S> {
             return object : redux.Reducer<S> {
-                override fun reduce(state: S, action: Any): S = reducer.reduce(state, action)
+                override fun reduce(state: S, action: Any): S {
+                    val apiAction = if (action == redux.Store.Companion.INIT) {
+                        redux.api.Store.Companion.INIT
+                    } else {
+                        action
+                    }
+                    return reducer.reduce(state, apiAction)
+                }
             }
         }
     }

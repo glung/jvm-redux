@@ -16,6 +16,8 @@ class ReduksStoreAdapter<S : Any>(val impl: com.beyondeye.reduks.Store<S>) : Sto
 
     override fun replaceReducer(reducer: Reducer<S>) {
         impl.replaceReducer(toLibReducer(reducer))
+        // TODO : Remove when fixed in lib
+        impl.dispatch(Store.Companion.INIT)
     }
 
     companion object {
@@ -36,7 +38,7 @@ class ReduksStoreAdapter<S : Any>(val impl: com.beyondeye.reduks.Store<S>) : Sto
         private fun <S : Any> reduksStoreAdapter(initialState: S, reducer: Reducer<S>): ReduksStoreAdapter<S> {
             val libStore = com.beyondeye.reduks.SimpleStore(initialState, toLibReducer(reducer))
             val store = ReduksStoreAdapter(libStore)
-            // The lib does not do it
+            // TODO : Remove when fixed in lib
             store.dispatch(Store.Companion.INIT)
             return store
         }

@@ -95,6 +95,16 @@ fun makeCreateStoreTests(createStore: (reducer: Reducer<State>, initialState: St
 
             }
 
+            it ("sends init when replacing a reducer") {
+                val store = createStore(Reducers.TODOS, State())
+                var receivedAction : Any? = null
+                store.replaceReducer(Reducer { state: State, action: Any ->
+                    receivedAction = action
+                    state
+                })
+                expect(Store.Companion.INIT) {receivedAction}
+            }
+
             it("preserves the state when replacing a reducer") {
                 val store = createStore(Reducers.TODOS, State())
                 store.dispatch(addTodo("Hello"))
