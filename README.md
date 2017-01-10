@@ -1,3 +1,7 @@
+# DEPRECATED
+
+Moved to https://github.com/jvm-redux/
+
 # jvm-redux
 
 Avoiding duplicate efforts. 
